@@ -5,110 +5,560 @@
   <title>Gazuza Gastrobar</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    :root {
+      --bg: #0f0f0f;
+      --bg-soft: #171717;
+      --card: #1f1f1f;
+      --text: #f5f5f5;
+      --muted: #b8b8b8;
+      --accent: #c59d5f;
+      --accent-hover: #d8b276;
+      --line: rgba(255,255,255,0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #111;
-      color: #fff;
-      text-align: center;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
 
-    header {
-      padding: 40px 20px;
-      background: #000;
+    a {
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(15, 15, 15, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      gap: 20px;
+    }
+
+    .brand {
+      font-size: 1.2rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: var(--text);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      background:
+        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.68)),
+        url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+    }
+
+    .hero-content {
+      width: 100%;
+      padding: 90px 0;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
     }
 
     h1 {
-      margin: 0;
-      font-size: 2.5em;
+      font-size: clamp(2.4rem, 6vw, 4.8rem);
+      line-height: 1.05;
+      margin: 0 0 16px;
     }
 
-    .section {
-      padding: 40px 20px;
+    .hero p {
+      max-width: 700px;
+      margin: 0 auto 30px;
+      color: #efefef;
+      font-size: 1.08rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
     .btn {
       display: inline-block;
-      padding: 15px 25px;
-      margin: 10px;
-      background: #e63946;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-weight: bold;
+      transition: 0.25s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #111;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border-color: rgba(255,255,255,0.25);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    section {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 14px;
+      font-size: 2rem;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0 auto 45px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .feature-card h3,
+    .menu-card h3,
+    .info-card h3,
+    .reservation-card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .feature-card p,
+    .menu-card p,
+    .info-card p,
+    .reservation-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .menu-card .price {
+      display: inline-block;
+      margin-top: 14px;
+      color: var(--accent);
       font-weight: bold;
     }
 
-    .btn:hover {
-      background: #ff4d5a;
+    .about {
+      background: var(--bg-soft);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .about-text {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .about-box {
+      background: linear-gradient(145deg, #1b1b1b, #131313);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 28px;
+      height: 100%;
+    }
+
+    .about-highlight {
+      color: var(--accent);
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .info-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .info-item {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+    }
+
+    .info-item strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .reservation-wrap {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 26px;
+      align-items: start;
     }
 
     form {
-      max-width: 400px;
-      margin: auto;
-      text-align: left;
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
     }
 
-    input, textarea {
+    input, textarea, select {
       width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: none;
-      border-radius: 5px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #121212;
+      color: var(--text);
+      font-size: 0.98rem;
+      outline: none;
     }
 
-    footer {
-      padding: 20px;
-      background: #000;
-      font-size: 0.9em;
-      color: #aaa;
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--accent);
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .full-btn {
+      width: 100%;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .small-note {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin-top: 14px;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 30px 0 50px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .footer a {
+      color: var(--accent);
+    }
+
+    @media (max-width: 900px) {
+      .grid-3,
+      .grid-2,
+      .reservation-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        flex-direction: column;
+      }
+
+      .hero {
+        min-height: 78vh;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      section {
+        padding: 60px 0;
+      }
+
+      .card,
+      .about-box {
+        padding: 20px;
+      }
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>Gazuza Gastrobar</h1>
-  <p>Buen comer, buen beber, mejor ambiente</p>
-</header>
+  <div class="topbar">
+    <div class="container nav">
+      <a href="#" class="brand">GAZUZA GASTROBAR</a>
+      <div class="nav-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#carta">Carta</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#info">Información</a>
+        <a href="#reservas">Reservas</a>
+      </div>
+    </div>
+  </div>
 
-<div class="section">
-  <h2>📍 Dónde estamos</h2>
-  <p>Pasarón de la Vera, Cáceres</p>
-</div>
+  <section class="hero" id="inicio">
+    <div class="container hero-content">
+      <div class="eyebrow">Pasarón de la Vera · Cáceres</div>
+      <h1>Sabores que invitan<br>a quedarse</h1>
+      <p>
+        En Gazuza Gastrobar unimos cocina, buen ambiente y un espacio pensado
+        para disfrutar sin prisas. Ven a comer, cenar, compartir y brindar.
+      </p>
+      <div class="hero-buttons">
+        <a class="btn btn-primary" href="#reservas">Reservar mesa</a>
+        <a class="btn btn-secondary" href="https://www.instagram.com/gazuza_gastrobar/" target="_blank">Ver Instagram</a>
+      </div>
+    </div>
+  </section>
 
-<div class="section">
-  <h2>🕒 Horario</h2>
-  <p>Lunes a Domingo: 12:00 - 00:00</p>
-</div>
+  <section>
+    <div class="container">
+      <h2 class="section-title">Una experiencia para disfrutar</h2>
+      <p class="section-subtitle">
+        Cocina con personalidad, ambiente acogedor y el plan perfecto para cualquier momento del día.
+      </p>
 
-<div class="section">
-  <h2>📸 Síguenos</h2>
-  <a class="btn" href="https://www.instagram.com/gazuza_gastrobar/" target="_blank">Instagram</a>
-</div>
+      <div class="grid-3">
+        <div class="card feature-card">
+          <h3>🍷 Buen ambiente</h3>
+          <p>Un gastrobar pensado para compartir buenos momentos con amigos, familia o pareja.</p>
+        </div>
+        <div class="card feature-card">
+          <h3>🍽️ Cocina con sabor</h3>
+          <p>Platos sabrosos, propuestas para compartir y una carta pensada para repetir.</p>
+        </div>
+        <div class="card feature-card">
+          <h3>📍 En Pasarón de la Vera</h3>
+          <p>Un rincón especial en Cáceres donde comer bien y sentirse como en casa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<div class="section">
-  <h2>📅 Reservar mesa</h2>
+  <section id="carta" class="about">
+    <div class="container">
+      <h2 class="section-title">Nuestra carta</h2>
+      <p class="section-subtitle">
+        Puedes cambiar estos platos por los reales del bar cuando quieras.
+      </p>
 
-  <a class="btn" href="https://wa.me/34616893649?text=Hola,%20quiero%20reservar%20una%20mesa%20en%20Gazuza%20Gastrobar" target="_blank">
-    Reservar por WhatsApp
-  </a>
+      <div class="grid-3">
+        <div class="card menu-card">
+          <h3>Entrantes para compartir</h3>
+          <p>Croquetas caseras, patatas especiales, tostas y propuestas para abrir boca.</p>
+          <span class="price">Desde 6,50 €</span>
+        </div>
 
-  <h3>O envíanos una solicitud</h3>
+        <div class="card menu-card">
+          <h3>Platos principales</h3>
+          <p>Carnes, hamburguesas gourmet, opciones caseras y platos con mucho sabor.</p>
+          <span class="price">Desde 11,90 €</span>
+        </div>
 
-  <form action="https://formspree.io/f/TU_ID" method="POST">
-    <input type="text" name="nombre" placeholder="Tu nombre" required>
-    <input type="tel" name="telefono" placeholder="Teléfono" required>
-    <input type="date" name="fecha" required>
-    <input type="time" name="hora" required>
-    <input type="number" name="personas" placeholder="Número de personas" required>
-    <textarea name="mensaje" placeholder="Comentario"></textarea>
-    <button class="btn" type="submit">Enviar reserva</button>
-  </form>
-</div>
+        <div class="card menu-card">
+          <h3>Postres y copas</h3>
+          <p>El broche perfecto: algo dulce, café y una buena copa para alargar la sobremesa.</p>
+          <span class="price">Desde 4,50 €</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<footer>
-  © 2026 Gazuza Gastrobar
-</footer>
+  <section id="nosotros">
+    <div class="container grid-2">
+      <div class="about-box">
+        <div class="about-highlight">Sobre Gazuza Gastrobar</div>
+        <h2 style="margin-top:0;">Un sitio con alma</h2>
+        <p class="about-text">
+          Gazuza Gastrobar nace con la idea de ofrecer un lugar cercano, con estilo,
+          buena comida y un ambiente agradable. Un espacio para disfrutar de una comida
+          tranquila, una cena especial o unas copas en buena compañía.
+        </p>
+      </div>
+
+      <div class="about-box">
+        <div class="about-highlight">Nuestra filosofía</div>
+        <h2 style="margin-top:0;">Comer bien y sentirse bien</h2>
+        <p class="about-text">
+          Cuidamos cada detalle para que la experiencia sea completa: atención cercana,
+          producto sabroso y un entorno acogedor al que siempre apetezca volver.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="info" class="about">
+    <div class="container">
+      <h2 class="section-title">Información</h2>
+      <p class="section-subtitle">
+        Aquí tienes los datos más importantes para que cualquiera pueda encontrarnos fácilmente.
+      </p>
+
+      <div class="grid-2">
+        <div class="card info-card">
+          <h3>Datos del restaurante</h3>
+          <div class="info-list">
+            <div class="info-item">
+              <strong>📍 Dirección</strong>
+              Pasarón de la Vera, Cáceres
+            </div>
+            <div class="info-item">
+              <strong>🕒 Horario</strong>
+              Lunes a Domingo: 12:00 - 00:00
+            </div>
+            <div class="info-item">
+              <strong>📞 Reservas</strong>
+              +34 616 89 36 49
+            </div>
+          </div>
+        </div>
+
+        <div class="card info-card">
+          <h3>Encuéntranos también aquí</h3>
+          <div class="info-list">
+            <div class="info-item">
+              <strong>📸 Instagram</strong>
+              <a href="https://www.instagram.com/gazuza_gastrobar/" target="_blank" style="color: var(--accent);">
+                @gazuza_gastrobar
+              </a>
+            </div>
+            <div class="info-item">
+              <strong>🗺️ Mapa</strong>
+              <a href="https://www.google.com/maps/search/Pasarón+de+la+Vera,+Cáceres" target="_blank" style="color: var(--accent);">
+                Ver ubicación en Google Maps
+              </a>
+            </div>
+            <div class="info-item">
+              <strong>💬 WhatsApp</strong>
+              <a href="https://wa.me/34616893649?text=Hola,%20quiero%20reservar%20una%20mesa%20en%20Gazuza%20Gastrobar" target="_blank" style="color: var(--accent);">
+                Escribir ahora
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reservas">
+    <div class="container">
+      <h2 class="section-title">Reserva tu mesa</h2>
+      <p class="section-subtitle">
+        Puedes reservar directamente por WhatsApp o enviarnos una solicitud desde el formulario.
+      </p>
+
+      <div class="reservation-wrap">
+        <div class="card reservation-card">
+          <h3>Reserva rápida por WhatsApp</h3>
+          <p>
+            La forma más cómoda y rápida. Al pulsar el botón se abrirá WhatsApp con el mensaje preparado.
+          </p>
+          <div style="margin-top: 22px;">
+            <a class="btn btn-primary" href="https://wa.me/34616893649?text=Hola,%20quiero%20reservar%20una%20mesa%20en%20Gazuza%20Gastrobar" target="_blank">
+              Reservar por WhatsApp
+            </a>
+          </div>
+        </div>
+
+        <div class="card reservation-card">
+          <h3>Solicitud de reserva</h3>
+          <p>
+            Completa este formulario y te confirmaremos la disponibilidad.
+          </p>
+
+          <form action="https://formspree.io/f/TU_ID" method="POST">
+            <input type="text" name="nombre" placeholder="Nombre" required>
+            <input type="tel" name="telefono" placeholder="Teléfono" required>
+            <input type="date" name="fecha" required>
+            <input type="time" name="hora" required>
+            <input type="number" name="personas" placeholder="Número de personas" min="1" required>
+            <textarea name="mensaje" placeholder="Comentario o petición especial"></textarea>
+            <button class="btn btn-primary full-btn" type="submit">Enviar solicitud</button>
+          </form>
+
+          <div class="small-note">
+            Recuerda cambiar <strong>TU_ID</strong> por el ID real de Formspree para que el formulario funcione.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer">
+    <div class="container">
+      © 2026 Gazuza Gastrobar · Pasarón de la Vera, Cáceres ·
+      <a href="https://www.instagram.com/gazuza_gastrobar/" target="_blank">Instagram</a>
+    </div>
+  </div>
 
 </body>
 </html>
